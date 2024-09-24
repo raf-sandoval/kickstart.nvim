@@ -1014,7 +1014,19 @@ require('lazy').setup({
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       vim.opt.termguicolors = true
-      require('bufferline').setup {}
+      require('bufferline').setup {
+        options = {
+          separator_style = 'slope',
+          offsets = {
+            {
+              filetype = 'neo-tree',
+              text = 'Files',
+              highlight = 'Directory',
+              separator = true, -- use a "true" to enable the default, or set your own character
+            },
+          },
+        },
+      }
     end,
   },
   {
@@ -1049,6 +1061,30 @@ require('lazy').setup({
         },
       }
     end,
+  },
+  {
+    'linux-cultist/venv-selector.nvim',
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+      'mfussenegger/nvim-dap-python', --optional
+      { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+    },
+    lazy = false,
+    branch = 'regexp', -- This is the regexp branch, use this for the new version
+    config = function()
+      require('venv-selector').setup()
+    end,
+    keys = {
+      { ',v', '<cmd>VenvSelect<cr>' },
+    },
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    opts = {
+      open_mapping = [[<leader>tt]],
+    },
   },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
